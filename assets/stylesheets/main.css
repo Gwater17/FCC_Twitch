@@ -73,7 +73,7 @@ body {
 
 main {
   margin: 0 auto;
-  background: red;
+  background: #c0c0c0;
   width: 100%;
 }
 
@@ -140,7 +140,7 @@ header div p {
 }
 
 .displayOption p {
-  color: #808000;
+  color: #dc143c;
 }
 
 .displayOption:first-child {
@@ -164,4 +164,67 @@ header div p {
 
 .offlineColor {
   border: 5px solid #ff00ff;
+}
+
+nav {
+  width: 600px; /* don't think this needs to be recalculated */
+  background: #eee;
+  margin: 0 auto;
+  padding: 10px;
+  margin-top: 5px;
+  position: relative;
+}
+
+nav div:first-child {
+  margin-right: 5px;
+}
+
+nav div {
+  display: inline-block;
+}
+
+.fa-search {
+  font-size: 2em;
+}
+
+nav p {
+  display: inline-block;
+  margin-left: 5px;
+  font-size: 1.6em;
+  color: #666;
+}
+
+input {
+  outline: none;
+  border: none;
+  font-size: 1.6em;
+  background: #eee;
+  width: 550px;
+}
+/*
+input {
+  border: none;
+  width: 600px;
+  height: 80px;
+  margin-left: 5px;
+  font-size: 1.6em;
+  color: #666;
+}
+*/
+
+/*************
+State
+*************/
+::-webkit-input-placeholder {
+  color: #222;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+  color: #222;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #222;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: #222;
 }
