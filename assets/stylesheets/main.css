@@ -155,11 +155,11 @@ header div p {
 }
 
 .allColor {
-  border: 5px solid #0ff;
+  border: 5px solid #ffa500;
 }
 
 .onlineColor {
-  border: 5px solid #ffa500;
+  border: 5px solid #0ff;
 }
 
 .offlineColor {
@@ -201,16 +201,29 @@ input {
   background: #eee;
   width: 550px;
 }
-/*
-input {
-  border: none;
-  width: 600px;
-  height: 80px;
-  margin-left: 5px;
-  font-size: 1.6em;
-  color: #666;
+
+/*****************
+Users
+*****************/
+
+.users {
+  width: 572px;
+  margin: 0 auto;
 }
-*/
+
+.users img {
+  border-radius: 100%;
+  width: 45px;
+  height: 45px;
+}
+
+.online {
+  background: #0ff;
+}
+
+.offline {
+  background: #ff00ff
+}
 
 /*************
 State
