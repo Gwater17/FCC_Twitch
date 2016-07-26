@@ -41,8 +41,18 @@ function searchThroughUsers(status) {
   var users = ["storbeck", "ESL_SC2", "Habathcx", "FreeCodeCamp", "RobotCaleb", "cretetion", "noobs2ninjas", "comster404", "OGamingSC2", "sheevergaming", "Beohoff", "TR7K", "brunofin", "Test_channel"]
   for (var i = 0; i < users.length; i++) {
     var searchThisUrl = "https://api.twitch.tv/kraken/streams/" + users[i].toLowerCase() + "?callback=?"
-    $.getJSON(searchThisUrl, function(data) {
-      console.log(data);
+    // console.log(users[i]);
+    $.getJSON(searchThisUrl, users[i], function(data) {
+      if (data.stream === undefined) {
+        // console.log("Account closed");
+        // console.log(users[i]);
+        // console.log(users);
+        addUnavailableDiv(users[i]);
+      } else if (data.stream === null) {
+        console.log("Offline");
+      } else {
+        console.log("streaming");
+      }
     })
   }
  }
@@ -50,13 +60,24 @@ function searchThroughUsers(status) {
 
 //END: call all function when page loads
 
-/*function addUnavailableDiv(status)*/
+/*function addUnavailableDiv*/
 //0. create newDiv
 //1. add the class unavailable to the newDiv
 //1.5 create a blank profile image add the src of the image via attr add the selector .users img append it to the the newDiv
 //1.6 create a paragraph, add the class username, add text (which will be the current username) append it to the newDiv
 //2. create a paragraph, add the class userinfo, add text (which will be Account Closed) append it to the newDiv
 //5. append the new div to the body
+
+function addUnavailableDiv(username) {
+  // console.log(username);
+  var newDiv = $("<div>").addClass("unavailable")
+  $("<img>").attr({
+    src: "assets/images/nophoto_user.png",
+    alt: "unavailable"
+  }).appendTo(newDiv)
+  $("<p>").addClass(".username").text
+  // newDiv.appendTo(".users");
+}
 
 /*function addOfflineDiv(status, offlineUrl)
 //0. create newDiv

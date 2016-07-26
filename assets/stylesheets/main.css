@@ -65,7 +65,8 @@ Layout
 *************/
 body {
   /*background: url("file:///Users/mg/js_exercises/websites/free_code_camp/twitch/assets/images/background.jpg") no-repeat center center fixed;*/
-  background: url("http://www.intrawallpaper.com/static/images/light_textured_backround_GnbGFCY.jpg") no-repeat center center fixed;
+  /*background: url("http://www.intrawallpaper.com/static/images/light_textured_backround_GnbGFCY.jpg") no-repeat center center fixed;*/
+  background: url("http://res.cloudinary.com/dyr8j9g6m/image/upload/v1469508793/background_gx5wbz.jpg") no-repeat center center fixed;
   background-size: cover;
   font-size: 62.5%;
   font-family: 'Catamaran', helvetica, arial, sans-serif;
