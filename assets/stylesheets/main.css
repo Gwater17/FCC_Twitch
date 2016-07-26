@@ -215,6 +215,30 @@ Users
   border-radius: 100%;
   width: 45px;
   height: 45px;
+  float: left;
+}
+
+.online,
+.offline,
+.unavailable {
+  height: 79px;
+  padding: 10px; 
+}
+
+.username,
+.userinfo {
+  color: white;
+  margin-left: 60px;
+}
+
+.username {
+  font-weight: 500;
+  font-size: 1.8em;
+}
+
+.userinfo {
+  font-weight: 300;
+  font-size: 1.6em;
 }
 
 .online {
@@ -223,6 +247,10 @@ Users
 
 .offline {
   background: #ff00ff
+}
+
+.unavailable {
+  background: #444;
 }
 
 /*************
