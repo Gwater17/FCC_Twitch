@@ -40,12 +40,13 @@ function getStreamerData (url) {
 function searchThroughUsers(status) {
   var users = ["storbeck", "ESL_SC2", "Habathcx", "FreeCodeCamp", "RobotCaleb", "cretetion", "noobs2ninjas", "comster404", "OGamingSC2", "sheevergaming", "Beohoff", "TR7K", "brunofin", "Test_channel"]
   for (var i = 0; i < users.length; i++) {
-    var searchThisUrl = "https://api.twitch.tv/kraken/streams/" + users[i].toLowerCase() + "?callback=?"
+    var searchThisUrl = "https://api.twitch.tv/kraken/streams/" + users[i].toLowerCase() + "?callback=?";
     // console.log(users[i]);
+    (function IIFE(i){
     $.getJSON(searchThisUrl, users[i], function(data) {
       if (data.stream === undefined) {
         // console.log("Account closed");
-        // console.log(users[i]);
+        console.log(users[i]);
         // console.log(users);
         addUnavailableDiv(users[i]);
       } else if (data.stream === null) {
@@ -54,6 +55,7 @@ function searchThroughUsers(status) {
         console.log("streaming");
       }
     })
+  })(i)
   }
  }
  searchThroughUsers();
@@ -69,7 +71,7 @@ function searchThroughUsers(status) {
 //5. append the new div to the body
 
 function addUnavailableDiv(username) {
-  // console.log(username);
+  console.log(username);
   var newDiv = $("<div>").addClass("unavailable")
   $("<img>").attr({
     src: "assets/images/nophoto_user.png",
