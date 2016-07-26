@@ -135,7 +135,7 @@ function addOfflineDiv(username, offlineUrl) {
 //5. append the newDiv to the body*/
 
 function addOnlineDiv(username, logoURL, game, streamInfo) {
-  console.log(username, logoURL, game, streamInfo);
+  // console.log(username, logoURL, game, streamInfo);
   var newDiv = $("<div>").addClass("online");
   $("<img>").attr({
     src: logoURL,
