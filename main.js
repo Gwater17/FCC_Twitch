@@ -1,3 +1,4 @@
+/*
 function getStreamerData (url) {
   return $.getJSON(url, function(data) {
     return data;
@@ -5,6 +6,7 @@ function getStreamerData (url) {
   // console.log(data.stream.channel.logo);
   });
 }
+*/
 
 // getStreamerData('https://api.twitch.tv/kraken/streams/freecodecamp?callback=?');
 // getStreamerData('https://api.twitch.tv/kraken/streams/esl_sc2?callback=?');
@@ -39,11 +41,13 @@ function searchThroughUsers(status) {
   var users = ["storbeck", "ESL_SC2", "Habathcx", "FreeCodeCamp", "RobotCaleb", "cretetion", "noobs2ninjas", "comster404", "OGamingSC2", "sheevergaming", "Beohoff", "TR7K", "brunofin", "Test_channel"]
   for (var i = 0; i < users.length; i++) {
     var searchThisUrl = "https://api.twitch.tv/kraken/streams/" + users[i].toLowerCase() + "?callback=?"
-    var data = getStreamerData(searchThisUrl);
-    console.log(data);
+    $.getJSON(searchThisUrl, function(data) {
+      console.log(data);
+    })
   }
  }
  searchThroughUsers();
+
 //END: call all function when page loads
 
 /*function addUnavailableDiv(status)*/
