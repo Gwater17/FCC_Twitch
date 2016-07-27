@@ -14,11 +14,15 @@ function getStreamerData (url) {
 // getStreamerData('https://api.twitch.tv/kraken/channels/freecodecamp');
 
 /*So what I need to do is*/
-//1. create all function
-//2. create online function
-//3. create offline function
-//4. create search function (optional)
-//5. create event handlers for clicking the all, online and offline buttons
+//1. create all function (DONE! maybe refactor)
+//2. create online function (DONE! maybe refactor)
+//3. create offline function (DONE! maybe refactor)
+//4. create event handlers for clicking the all, online and offline buttons (DONE! maybe refactor)
+//5. create search function (optional)
+//6. fix modify the appearance and cursor for the all, online and offline buttons
+  //1. have it slideout like in the FCC example
+  //2. set the pointer to a cursor when hovering over the buttons (DONE)
+  //3. disable the button when it is the current state (DONE)
 
 
 /*searchThroughUsers function
@@ -37,8 +41,34 @@ function getStreamerData (url) {
   //1.75 var streamInfo = data.stream.channel.status
   //2. call the addDiv function w/ the argument online, logoUrl, game, streamInfo
 
-function searchThroughUsers(status) {
+function clearAndGetUsers() {
+  $(".users").empty();
   var users = ["storbeck", "ESL_SC2", "Habathcx", "FreeCodeCamp", "RobotCaleb", "cretetion", "noobs2ninjas", "comster404", "OGamingSC2", "sheevergaming", "Beohoff", "TR7K", "brunofin", "Test_channel"]
+  // $("[name=search").val("");
+  return users;
+}
+
+function all(event) {
+  var users = clearAndGetUsers();
+  // console.log("clicked on all")
+  // console.log(event);
+  // console.log(event.target)
+  $("#all").css({
+    "pointer-events": "none",
+    "background-color": "yellow"
+  }).css("background-color", "yellow");
+  $("#online").css({
+    "pointer-events": "auto",
+    "background-color": "rgb(225, 225, 230)"
+  });
+  $("#offline").css({
+    "pointer-events": "auto",
+    "background-color": "rgb(225, 225, 230)"
+  });
+  $("[name=search").attr("placeholder", "Search All Users By Username");
+  // $("#all").attr("disabled", true);
+  // $("#online").removeAttr("disabled");
+  // $("#offline").removeAttr("disabled");
   for (var i = 0; i < users.length; i++) {
     var searchThisUrl = "https://api.twitch.tv/kraken/streams/" + users[i].toLowerCase() + "?callback=?"; //I actually needed to add this semicolon
     // console.log(users[i]);
@@ -65,8 +95,89 @@ function searchThroughUsers(status) {
   })(i)
   }
  }
- searchThroughUsers();
 
+ function online(event){
+  var users = clearAndGetUsers();
+  $("#all").css({
+    "pointer-events": "auto",
+    "background-color": "rgb(225, 225, 230)"
+})
+  $("#online").css({
+    "pointer-events": "none",
+    "background-color": "yellow"
+});
+  $("#offline").css({
+    "pointer-events": "auto",
+    "background-color": "rgb(225, 225, 230)"
+  });
+  $("[name=search").attr("placeholder", "Search Online Users By Username");
+  for (var i = 0; i < users.length; i++) {
+    var searchThisUrl = "https://api.twitch.tv/kraken/streams/" + users[i].toLowerCase() + "?callback=?"; //I actually needed to add this semicolon
+    (function IIFE(i){
+    $.getJSON(searchThisUrl, function(data) {
+      if (data.stream) {
+        // console.log("Offline");
+        // console.log("hits this if");
+        // console.log("this is the url I want", data._links.channel);
+        addOnlineDiv(users[i], data.stream.channel.logo, data.stream.channel.game, data.stream.channel.status)
+      }
+    })
+  })(i)
+ }
+}
+
+function offline(event){
+  var users = clearAndGetUsers();
+  $("#all").css({
+    "pointer-events": "auto",
+    "background-color": "rgb(225, 225, 230)"
+  });
+  $("#online").css({
+    "pointer-events": "auto",
+    "background-color": "rgb(225, 225, 230)"
+  });
+  $("#offline").css({
+    "pointer-events": "none",
+    "background-color": "yellow"
+});
+  $("[name=search").attr("placeholder", "Search Offline Users By Username");
+  for (var i = 0; i < users.length; i++) {
+    var searchThisUrl = "https://api.twitch.tv/kraken/streams/" + users[i].toLowerCase() + "?callback=?"; //I actually needed to add this semicolon
+    (function IIFE(i){
+    $.getJSON(searchThisUrl, function(data) {
+      if (data.stream === null) {
+        // console.log("Offline");
+        // console.log("hits this if");
+        // console.log("this is the url I want", data._links.channel);
+        addOfflineDiv(users[i], data._links.channel)
+      }
+    })
+  })(i)
+}
+}
+
+function search(){
+  console.log("the search function executes");
+  if ($("[name=search").attr("placeholder") === "Search All Users By Username") {
+    // console.log("It hits all users!");
+    searchAll();
+  } else if ($("[name=search").attr("placeholder") === "Search Online Users By Username"){
+      console.log("It hits online users!")
+  } else {
+    console.log("It hits offline users!")
+  }
+}
+
+function searchAll(){
+  console.log("in search all function")
+  all();
+}
+
+all();
+ $("#all").on("click", all);
+ $("#online").on("click", online);
+ $("#offline").on("click", offline);
+ $("[name=search]").on("keypress",search);
 //END: call all function when page loads
 
 /*function addUnavailableDiv*/

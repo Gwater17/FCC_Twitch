@@ -270,3 +270,7 @@ State
 :-moz-placeholder { /* Firefox 18- */
   color: #222;
 }
+
+.displayOption :hover {
+  cursor: pointer;
+}
