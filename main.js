@@ -41,17 +41,23 @@ function getStreamerData (url) {
   //1.75 var streamInfo = data.stream.channel.status
   //2. call the addDiv function w/ the argument online, logoUrl, game, streamInfo
 
+/*
+function justGetUsers() {
+  var users = ["storbeck", "ESL_SC2", "Habathcx", "FreeCodeCamp", "RobotCaleb", "cretetion", "noobs2ninjas", "comster404", "OGamingSC2", "sheevergaming", "Beohoff", "TR7K", "brunofin", "Test_channel"];
+  return users;
+}*/
+
 function clearAndGetUsers(click) {
   $(".users").empty();
   var users = ["storbeck", "ESL_SC2", "Habathcx", "FreeCodeCamp", "RobotCaleb", "cretetion", "noobs2ninjas", "comster404", "OGamingSC2", "sheevergaming", "Beohoff", "TR7K", "brunofin", "Test_channel"]
   if (click === "click") {
-    $("[name=search").val("");
+    $("[name=search]").val("");
   }
   return users;
 }
 
 function all(click) {
-  console.log(click);
+  // console.log(click);
   var users = clearAndGetUsers(click);
   // console.log("clicked on all")
   // console.log(event);
@@ -68,7 +74,7 @@ function all(click) {
     "pointer-events": "auto",
     "background-color": "rgb(225, 225, 230)"
   });
-  $("[name=search").attr("placeholder", "Search All Users By Username");
+  $("[name=search]").attr("placeholder", "Search All Users By Username");
   // $("#all").attr("disabled", true);
   // $("#online").removeAttr("disabled");
   // $("#offline").removeAttr("disabled");
@@ -113,7 +119,7 @@ function all(click) {
     "pointer-events": "auto",
     "background-color": "rgb(225, 225, 230)"
   });
-  $("[name=search").attr("placeholder", "Search Online Users By Username");
+  $("[name=search]").attr("placeholder", "Search Online Users By Username");
   for (var i = 0; i < users.length; i++) {
     var searchThisUrl = "https://api.twitch.tv/kraken/streams/" + users[i].toLowerCase() + "?callback=?"; //I actually needed to add this semicolon
     (function IIFE(i){
@@ -143,7 +149,7 @@ function offline(click){
     "pointer-events": "none",
     "background-color": "yellow"
 });
-  $("[name=search").attr("placeholder", "Search Offline Users By Username");
+  $("[name=search]").attr("placeholder", "Search Offline Users By Username");
   for (var i = 0; i < users.length; i++) {
     var searchThisUrl = "https://api.twitch.tv/kraken/streams/" + users[i].toLowerCase() + "?callback=?"; //I actually needed to add this semicolon
     (function IIFE(i){
@@ -154,26 +160,131 @@ function offline(click){
         // console.log("this is the url I want", data._links.channel);
         addOfflineDiv(users[i], data._links.channel)
       }
+      if (data.stream === undefined) {
+        // console.log("Account closed");
+        // console.log(users[i]);
+        // console.log(users);
+        addUnavailableDiv(users[i]);
+      } 
     })
   })(i)
 }
 }
 
 function search(){
-  console.log("the search function executes");
-  if ($("[name=search").attr("placeholder") === "Search All Users By Username") {
+  // console.log("the search function executes");
+  if ($("[name=search]").attr("placeholder") === "Search All Users By Username") {
     // console.log("It hits all users!");
     searchAll();
-  } else if ($("[name=search").attr("placeholder") === "Search Online Users By Username"){
-      console.log("It hits online users!")
+  } else if ($("[name=search]").attr("placeholder") === "Search Online Users By Username"){
+      // console.log("It hits online users!")
+      searchOnline();
   } else {
-    console.log("It hits offline users!")
+    // console.log("It hits offline users!");
+    searchOffline();
   }
 }
 
+//0. clear and get the users
+//1. iterate over the array of users 
+  //2. if the input text equals a slice of the current user from 0 to the input text length
+    //1. use the same logic as the all function to add a div
 function searchAll(){
-  console.log("in search all function")
-  all("not a click");
+  // console.log("in search all function")
+  // all("not a click");
+  // console.log("all has run");
+  var users = clearAndGetUsers();
+  // console.log(searchInput["0"].value);
+  for (var i = 0; i < users.length; i++) {
+    var searchThisUrl = "https://api.twitch.tv/kraken/streams/" + users[i].toLowerCase() + "?callback=?"; //I actually needed to add this semicolon
+    // console.log(users[i]);
+    (function IIFE(i){
+    $.getJSON(searchThisUrl, function(data) {
+      var searchInput = $("[name=search]")
+      var searchText = searchInput["0"].value
+      // console.log(searchInput["0"].value);
+      if (searchText === users[i].slice(0,searchText.length)){
+        if (data.stream === undefined) {
+        // console.log("Account closed");
+        // console.log(users[i]);
+        // console.log(users);
+        addUnavailableDiv(users[i]);
+      } else if (data.stream === null) {
+        // console.log("Offline");
+        // console.log("hits this if");
+        // console.log("this is the url I want", data._links.channel);
+        addOfflineDiv(users[i], data._links.channel)
+      } else {
+        // console.log("streaming");
+        // console.log("This is the image: ", data.stream.channel.logo);
+        // console.log("This is the game: ", data.stream.channel.game)
+        // console.log("This is the stream info: ", data.stream.channel.status)
+        addOnlineDiv(users[i], data.stream.channel.logo, data.stream.channel.game, data.stream.channel.status)
+      }
+      }
+    })
+  })(i)
+  }
+ }
+
+ //1. get users via clearAndGetUsers
+ //2. iterate over the users
+ //3. make an api call for each user
+ //4. if the value of the searchText equals the value of the user (sliced from 0 to searchText length)
+ //5. if the value of the stream is truthy
+ //6. call addOnlineDiv function
+ function searchOnline(){
+  var users = clearAndGetUsers();
+  for (var i = 0; i < users.length; i++) {
+    var searchThisUrl = "https://api.twitch.tv/kraken/streams/" + users[i].toLowerCase() + "?callback=?"; //I actually needed to add this semicolon
+    (function IIFE(i){
+    $.getJSON(searchThisUrl, function(data) {
+      var searchInput = $("[name=search]");
+      var searchText = searchInput["0"].value;
+      if (searchText === users[i].slice(0,searchText.length)) {
+        if (data.stream) {
+          // console.log("Offline");
+          // console.log("hits this if");
+          // console.log("this is the url I want", data._links.channel);
+          addOnlineDiv(users[i], data.stream.channel.logo, data.stream.channel.game, data.stream.channel.status)
+      }
+    }
+    })
+  })(i)
+ }
+}
+
+//1. get users via clearAndGetUsers
+//2. iterate over the users
+//2.5 make call to api for each user
+//3. if the input search equals the value of the user (slice from 0 to the length)
+  //1. call the make offline dive function
+function searchOffline(){
+  var users = clearAndGetUsers();
+  for (var i = 0; i < users.length; i++) {
+      var searchThisUrl = "https://api.twitch.tv/kraken/streams/" + users[i].toLowerCase() + "?callback=?"; //I actually needed to add this semicolon
+      (function IIFE(i){
+      $.getJSON(searchThisUrl, function(data) {
+        var searchInput = $("[name=search]")
+        var searchText = searchInput["0"].value;
+        // console.log(searchText);
+        if (searchText === users[i].slice(0,searchText.length)) {
+          if (data.stream === null) {
+          // console.log("Offline");
+          // console.log("hits this if");
+          // console.log("this is the url I want", data._links.channel);
+          addOfflineDiv(users[i], data._links.channel)
+          }
+          if (data.stream === undefined) {
+        // console.log("Account closed");
+        // console.log(users[i]);
+        // console.log(users);
+        addUnavailableDiv(users[i]);
+          } 
+        }
+      })
+    })(i)
+  }
 }
 
 all("initialized");
@@ -187,6 +298,12 @@ all("initialized");
   offline("click");
  });
  $("[name=search]").on("keypress",search);
+ $("[name=search]").on("keyup",function(e){
+    if (e.keyCode == 8){
+      // console.log("delete key pressed");
+      search();
+    }
+ });
 //END: call all function when page loads
 
 /*function addUnavailableDiv*/
