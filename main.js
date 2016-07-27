@@ -347,7 +347,8 @@ function addUnavailableDiv(username) {
   // console.log(username);
   var newDiv = $("<div>").addClass("unavailable")
   $("<img>").attr({
-    src: "assets/images/nophoto_user.png",
+    /*src: "assets/images/nophoto_user.png",*/
+    src: "http://res.cloudinary.com/dyr8j9g6m/image/upload/v1469596595/nophoto_user_cvntek.png",
     alt: "unavailable"
   }).appendTo(newDiv);
   $("<p>").addClass("username").text(username).appendTo(newDiv);
@@ -373,7 +374,8 @@ function addOfflineDiv(username, offlineUrl) {
     // console.log(logo);
     if (logo === null) {
       $("<img>").attr({
-    src: "assets/images/nophoto_user.png",
+    /*src: "assets/images/nophoto_user.png",*/
+    src: "http://res.cloudinary.com/dyr8j9g6m/image/upload/v1469596595/nophoto_user_cvntek.png",
     alt: "unavailable"
   }).appendTo(newDiv);
     $("<p>").addClass("username").text(username).appendTo(newDiv);
