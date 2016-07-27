@@ -41,15 +41,18 @@ function getStreamerData (url) {
   //1.75 var streamInfo = data.stream.channel.status
   //2. call the addDiv function w/ the argument online, logoUrl, game, streamInfo
 
-function clearAndGetUsers() {
+function clearAndGetUsers(click) {
   $(".users").empty();
   var users = ["storbeck", "ESL_SC2", "Habathcx", "FreeCodeCamp", "RobotCaleb", "cretetion", "noobs2ninjas", "comster404", "OGamingSC2", "sheevergaming", "Beohoff", "TR7K", "brunofin", "Test_channel"]
-  // $("[name=search").val("");
+  if (click === "click") {
+    $("[name=search").val("");
+  }
   return users;
 }
 
-function all(event) {
-  var users = clearAndGetUsers();
+function all(click) {
+  console.log(click);
+  var users = clearAndGetUsers(click);
   // console.log("clicked on all")
   // console.log(event);
   // console.log(event.target)
@@ -96,8 +99,8 @@ function all(event) {
   }
  }
 
- function online(event){
-  var users = clearAndGetUsers();
+ function online(click){
+  var users = clearAndGetUsers(click);
   $("#all").css({
     "pointer-events": "auto",
     "background-color": "rgb(225, 225, 230)"
@@ -126,8 +129,8 @@ function all(event) {
  }
 }
 
-function offline(event){
-  var users = clearAndGetUsers();
+function offline(click){
+  var users = clearAndGetUsers(click);
   $("#all").css({
     "pointer-events": "auto",
     "background-color": "rgb(225, 225, 230)"
@@ -170,13 +173,19 @@ function search(){
 
 function searchAll(){
   console.log("in search all function")
-  all();
+  all("not a click");
 }
 
-all();
- $("#all").on("click", all);
- $("#online").on("click", online);
- $("#offline").on("click", offline);
+all("initialized");
+ $("#all").on("click", function(){
+  all("click");
+ });
+ $("#online").on("click", function(){
+  online("click");
+ });
+ $("#offline").on("click", function(){
+  offline("click");
+ });
  $("[name=search]").on("keypress",search);
 //END: call all function when page loads
 
