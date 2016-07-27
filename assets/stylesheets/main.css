@@ -99,6 +99,7 @@ header {
 @media screen and (min-width: 600px) {
   header {
     margin-top: 1.5625%;
+    overflow: hidden; /*to hide rest of all, online offline*/
   }
 }
 
@@ -135,7 +136,7 @@ header div p {
   display: block;
   margin-top: 5px;
   position: relative;
-  left: 530px;
+  left: 585px; /*was at 530*/
   background: rgb(225, 225, 230);
   padding: 2px;
 }

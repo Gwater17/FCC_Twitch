@@ -287,6 +287,15 @@ function searchOffline(){
   }
 }
 
+/*var moveLeft = function(move) {
+  console.log("hits this");
+    do {
+      $("#online").animate({
+      left: "-=55px"
+      }, 1000)
+    } while (move === true);
+    }*/
+
 all("initialized");
  $("#all").on("click", function(){
   all("click");
@@ -304,6 +313,26 @@ all("initialized");
       search();
     }
  });
+ $(".displayOption").on("mouseenter", function(){
+  $(this).animate({
+    left: "530px"
+  }).on("mouseleave", function(){
+    $(this).animate({
+      left: "585px"
+    })
+  })
+ })
+ /*
+  $(".displayOption").on("mouseleave", function(){
+  $(this).animate({
+    right: "-55px"
+  })
+ })*/
+ /*
+ $("#online").on("mouseover", function(){ 
+  var canMove = false;
+    moveLeft(canMove);
+ })*/
 //END: call all function when page loads
 
 /*function addUnavailableDiv*/
