@@ -322,6 +322,7 @@ all("initialized");
     })
   })
  })
+
  /*
   $(".displayOption").on("mouseleave", function(){
   $(this).animate({
@@ -345,14 +346,18 @@ all("initialized");
 
 function addUnavailableDiv(username) {
   // console.log(username);
+  var twitchProfile = "https://www.twitch.tv/" + username.toLowerCase();
   var newDiv = $("<div>").addClass("unavailable")
   $("<img>").attr({
     /*src: "assets/images/nophoto_user.png",*/
     src: "http://res.cloudinary.com/dyr8j9g6m/image/upload/v1469596595/nophoto_user_cvntek.png",
     alt: "unavailable"
   }).appendTo(newDiv);
-  $("<p>").addClass("username").text(username).appendTo(newDiv);
-  $("<p>").addClass("userinfo").text("Account Closed").appendTo(newDiv);
+  $("<a>").addClass("username").attr("href", twitchProfile).text(username).appendTo(newDiv);
+  $("<a>").addClass("userinfo").attr("href", twitchProfile).text("Account Closed").appendTo(newDiv);
+  // $("<p>").addClass("username").text(username).appendTo(newDiv);
+  // $("<p>").addClass("username").html(<a href=""username).appendTo(newDiv);
+  // $("<p>").addClass("userinfo").text("Account Closed").appendTo(newDiv);
   newDiv.appendTo(".users");
 }
 
@@ -368,6 +373,7 @@ function addUnavailableDiv(username) {
 
 function addOfflineDiv(username, offlineUrl) {
   // console.log(username, offlineUrl);
+  var twitchProfile = "https://www.twitch.tv/" + username.toLowerCase();
   var newDiv = $("<div>").addClass("offline");
   $.getJSON(offlineUrl, function(data){
     var logo = data.logo;
@@ -378,16 +384,23 @@ function addOfflineDiv(username, offlineUrl) {
     src: "http://res.cloudinary.com/dyr8j9g6m/image/upload/v1469596595/nophoto_user_cvntek.png",
     alt: "unavailable"
   }).appendTo(newDiv);
-    $("<p>").addClass("username").text(username).appendTo(newDiv);
-    $("<p>").addClass("userinfo").text("Offline").appendTo(newDiv);
+    // var linkToUser = "https://www.twitch.tv/" + username.toLowerCase();
+    // console.log(linkToUser)
+    $("<a>").addClass("username").attr("href", twitchProfile).text(username).appendTo(newDiv);
+    $("<a>").addClass("userinfo").attr("href", twitchProfile).text("Offline").appendTo(newDiv);
+    // var usernamePar = $("<p>").addClass("username").text(username).appendTo(newDiv);
+    // $("<a>").text(username).attr("src", linkToUser).appendTo(usernamePar);
+    // $("<p>").addClass("userinfo").text("Offline").appendTo(newDiv);
     newDiv.appendTo(".users");
     } else {
       $("<img>").attr({
         src: logo,
         alt: "profile-pic"
       }).appendTo(newDiv);
-      $("<p>").addClass("username").text(username).appendTo(newDiv);
-    $("<p>").addClass("userinfo").text("Offline").appendTo(newDiv);
+    $("<a>").addClass("username").attr("href", twitchProfile).text(username).appendTo(newDiv);
+    $("<a>").addClass("userinfo").attr("href", twitchProfile).text("Offline").appendTo(newDiv);
+    // $("<p>").addClass("username").text(username).appendTo(newDiv);
+    // $("<p>").addClass("userinfo").text("Offline").appendTo(newDiv);
     newDiv.appendTo(".users");
     }
   })
@@ -404,14 +417,17 @@ function addOfflineDiv(username, offlineUrl) {
 
 function addOnlineDiv(username, logoURL, game, streamInfo) {
   // console.log(username, logoURL, game, streamInfo);
+  var twitchProfile = "https://www.twitch.tv/" + username.toLowerCase();
+  // console.log(twitchProfile);
   var newDiv = $("<div>").addClass("online");
   $("<img>").attr({
     src: logoURL,
     alt: "profile-pic"
   }).appendTo(newDiv);
   // console.log("hit this in addOnlineDiv");
-  $("<p>").addClass("username").text(username).appendTo(newDiv);
-  $("<p>").addClass("userinfo").text(game + ": " + streamInfo).appendTo(newDiv);
+  $("<a>").addClass("username").attr("href", twitchProfile).text(username).appendTo(newDiv);
+  // $("<p>").addClass("username").text(username).appendTo(newDiv);
+  $("<a>").addClass("userinfo").attr("href", twitchProfile).text(game + ": " + streamInfo).appendTo(newDiv);
   newDiv.appendTo(".users");
 }
 
